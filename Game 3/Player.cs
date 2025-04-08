@@ -33,5 +33,17 @@ namespace Game_3
             sceneController = new SceneController(id, this);
         }
 
+        public void showStats()
+        {
+            Console.Clear();
+            Console.WriteLine($"Player: {name}");
+            Console.WriteLine($"Level: {level}");
+            Console.WriteLine($"Health: {health}/{maxHealth}");
+            Console.WriteLine($"Damage: {minDamage}-{maxDamage}");
+            Console.ReadKey();
+        }
+
+
+
     }
 }
