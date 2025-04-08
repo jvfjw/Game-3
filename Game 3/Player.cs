@@ -15,7 +15,23 @@ namespace Game_3
         public int maxHealth;
         public int minDamage;
         public int maxDamage;
-        public 
-        
+        public Inventory inventory;
+        public SceneController sceneController;
+
+
+        //everything player related is in this class
+        public Player(int id, string name, int level, int health, int maxHealth, int minDamage, int maxDamage)
+        {
+            this.id = id;
+            this.name = name;
+            this.level = level;
+            this.health = health;
+            this.maxHealth = maxHealth;
+            this.minDamage = minDamage;
+            this.maxDamage = maxDamage;
+            inventory = new Inventory(id, this);
+            sceneController = new SceneController(id, this);
+        }
+
     }
 }

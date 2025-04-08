@@ -9,7 +9,7 @@ namespace Game_3
     class Enemy
     {
         public int id;
-        public string name;
+        public string? name;
         public int level;
         public int health;
         public int maxHealth;

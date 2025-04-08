@@ -12,6 +12,7 @@ namespace Game_3
         public Player? player;
         public List<Items>? items;
 
+        //I'am utilizing the constructor to initialize the inventory with an id and a player.
 
         public Inventory(int id, Player? player)
         {
