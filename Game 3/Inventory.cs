@@ -51,7 +51,8 @@ namespace Game_3
                 {
                     Console.WriteLine($"- ID: {item.id}, {item.name} {item.description}");
                 }
-
+                Console.ReadKey();
+                Console.Clear();
             }
 
         }

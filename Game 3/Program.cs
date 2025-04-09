@@ -25,7 +25,7 @@ while (menuRunning)
     switch (input)
     {
         case "1":
-            
+            Console.Clear();
             Console.WriteLine("Select a name for your character");
             string? name = Console.ReadLine();
             player.name = name;
@@ -36,6 +36,7 @@ while (menuRunning)
             menuRunning = false;
             break;
         default:
+            Console.Clear();
             Console.WriteLine("Invalid option. Please try again.");
             break;
     }

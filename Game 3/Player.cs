@@ -41,6 +41,7 @@ namespace Game_3
             Console.WriteLine($"Health: {health}/{maxHealth}");
             Console.WriteLine($"Damage: {minDamage}-{maxDamage}");
             Console.ReadKey();
+            Console.Clear();
         }
 
 
