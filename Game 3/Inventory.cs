@@ -87,7 +87,7 @@ namespace Game_3
                 }
                 else
                 {
-                    Console.WriteLine($"{weapon.id} - {weapon.name} - {weapon.description}");
+                    Console.WriteLine($"id: {weapon.id} - {weapon.name} - {weapon.description}");
                 }
 
             }

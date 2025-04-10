@@ -115,13 +115,18 @@ namespace Game_3
 
             player.inventory.ShowWeapons(player);
 
-            Console.WriteLine("\nEnter the itemId to equip:");
+            Console.WriteLine("\nEnter the itemId to equip or press \"x\" to leave");
             bool itemFound = false;
 
             while (!itemFound)
             {
-                string? input = Console.ReadLine();
-                if (int.TryParse(input, out int itemId))
+                string? input = Console.ReadLine().Trim().ToLower();
+                if (input == "x")
+                {
+                    Console.Clear();
+                    break;
+                }
+                else if (int.TryParse(input, out int itemId))
                 {
                     Items? item = player.inventory.items?.FirstOrDefault(i => i.id == itemId);
                     if (item != null)

@@ -46,7 +46,6 @@ while (gameRunning)
     Console.WriteLine("1. Show Player Stats");
     Console.WriteLine("2. Show Inventory");
     Console.WriteLine("3. Exit Game");
-    Console.WriteLine("4. Select item");
     Console.Write("Please select an option: ");
     string? input = Console.ReadLine();
     switch (input)
@@ -59,11 +58,6 @@ while (gameRunning)
             break;
         case "3":
             gameRunning = false;
-            break;
-        case "4":
-            Console.WriteLine("Select an item to equip:\n");
-            player.inventory.ShowInventory(player);
-            player.selectItem(player);
             break;
         default:
             Console.WriteLine("Invalid option. Please try again.");
