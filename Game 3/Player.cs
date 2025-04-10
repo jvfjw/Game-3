@@ -8,6 +8,7 @@ namespace Game_3
 {
     class Player
     {
+        //everything player related is in this class
         public int id;
         public string name;
         public int level;
@@ -18,8 +19,6 @@ namespace Game_3
         public Inventory inventory;
         public SceneController sceneController;
 
-
-        //everything player related is in this class
         public Player(int id, string name, int level, int health, int maxHealth, int minDamage, int maxDamage)
         {
             this.id = id;
@@ -44,7 +43,23 @@ namespace Game_3
             Console.Clear();
         }
 
-
+        public void CreateName(Player player)
+        {
+            Console.Clear();
+            Console.WriteLine("Select a name for your character");
+            string? input = Console.ReadLine().Trim();
+            if (input != null && input.Length > 0)
+            {
+                player.name = input;
+            }
+            else
+            {
+                Console.WriteLine("Invalid name. Please try again.");
+                Console.WriteLine("Press any key to try again...");
+                Console.ReadKey();
+                CreateName(player);
+            }
+        }
 
     }
 }

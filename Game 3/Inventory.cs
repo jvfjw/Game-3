@@ -12,7 +12,7 @@ namespace Game_3
         public Player? player;
         public List<Items>? items;
 
-        //I'am utilizing the constructor to initialize the inventory with an id and a player.
+        //Utilizing the constructor to initialize the inventory with an id and a player. So i can assign a inventory to a player.
 
         public Inventory(int id, Player? player)
         {
@@ -21,7 +21,7 @@ namespace Game_3
             items = new List<Items>();
         }
 
-        //I will create a method to add items to the inventory.
+        //Method to add items to the inventory
 
         public void AddItem(Items item)
         {
@@ -51,25 +51,58 @@ namespace Game_3
                 {
                     Console.WriteLine($"- ID: {item.id}, {item.name} {item.description}");
                 }
-                Console.ReadKey();
-                Console.Clear();
             }
 
         }
-        //Verify if the player has the item in the inventory and if so, set the minDamage and maxDamage to the values of the selected item.
-        public void selectItem(Player player, int id )
+
+        public void ShowWeapons()
         {
-            if(player.inventory.items != null && player.inventory.items.Count > 0)
+            Console.Clear();
+            Console.WriteLine("Weapons:\n");
+
+            foreach(var weapon in player.inventory.items)
             {
-                foreach(var item in player.inventory.items)
+                if(weapon.minDamage == null && weapon.maxDamage == null)
                 {
-                    if (item.minDamage != null && item.maxDamage != null && id == item.id)
+                    continue;
+                }
+                else
+                {
+                    Console.WriteLine($"{weapon.id} - {weapon.name} - {weapon.description}");
+                }
+
+            }
+        }
+        //Verify if the player has the item in the inventory and if so, set the minDamage and maxDamage to the values of the selected item.
+        public void selectItem(Player player)
+        {
+            Console.Clear();
+            player.inventory.ShowWeapons();
+            Console.WriteLine("\nEnter the itemId to equip:");
+            bool itemFound = false;
+            while (!itemFound)
+            {
+                string? input = Console.ReadLine();
+                if (int.TryParse(input, out int itemId))
+                {
+                    Items? item = player.inventory.items?.FirstOrDefault(i => i.id == itemId);
+                    if (item != null)
                     {
                         player.minDamage = (int)item.minDamage;
                         player.maxDamage = (int)item.maxDamage;
-                        Console.WriteLine($"You have selected {item.name} with damage {player.minDamage} - {player.maxDamage}");
-                        break;
+                        Console.WriteLine($"You equipped {item.name}\nPress any key to continue");
+                        Console.ReadKey();
+                        Console.Clear();
+                        itemFound = true;
                     }
+                    else
+                    {
+                        Console.WriteLine("Item not found. Please try again.");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Invalid input. Please enter a valid item ID.");
                 }
             }
         }

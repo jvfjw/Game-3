@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Game_3
 {
+    //This class will be used to control to start a combat instance with the player and the enemy
     class CombatController
     {
         Player player;

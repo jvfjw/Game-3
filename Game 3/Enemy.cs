@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Game_3
 {
+    //This class will be used as template for all enemies in the game, thinking about adding a special boss enemy class that inherits from this class
     class Enemy
     {
         public int id;

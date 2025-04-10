@@ -12,8 +12,8 @@ namespace Game_3
         public Player? player;
 
 
-        /* I will utilize the constructor to initialize the scene controller with an id and a player.
-        // This will allow me to create a scene controller for each player in the game. */
+        //I will use this class to control where the player is in the game, if he is in a scene or in combat.
+        //I think a can create a save system with this class, so i can save the game and load it later. but i will do that later.
         public SceneController(int id, Player? player)
         {
             this.id = id;

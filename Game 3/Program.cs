@@ -26,11 +26,7 @@ while (menuRunning)
     {
         case "1":
             Console.Clear();
-            Console.WriteLine("Select a name for your character");
-            string? name = Console.ReadLine();
-            player.name = name;
-            menuRunning = false;
-            gameRunning = true;
+            player.CreateName(player);
             break;
         case "2":
             menuRunning = false;
@@ -64,14 +60,7 @@ while (gameRunning)
         case "4":
             Console.WriteLine("Select an item to equip:\n");
             player.inventory.ShowInventory();
-            Console.WriteLine("Enter the ID of the item you want to equip:");
-            input = Console.ReadLine()?.Trim();
-            if (string.IsNullOrEmpty(input) || !int.TryParse(input, out int itemId))
-            {
-                Console.WriteLine("Invalid input. Please enter a valid item ID.");
-                break;
-            }
-            player.inventory.selectItem(player, int.Parse(input));
+            player.inventory.selectItem(player);
             break;
         default:
             Console.WriteLine("Invalid option. Please try again.");

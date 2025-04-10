@@ -8,6 +8,7 @@ namespace Game_3
 {
     class Items
     {
+        //I am using the class Items to create a template for all the items in the game.
         public int id;
         public string? name;
         public string? description;
