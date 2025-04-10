@@ -18,9 +18,9 @@ namespace Game_3
         public int minDamage;
         public int maxDamage;
         public Inventory inventory;
-        public SceneController sceneController;
-
-        public Player(int id, string name, int level, int health, int maxHealth, int minDamage, int maxDamage)
+        public int sceneId;
+        public Items equippedItem;
+        public Player(int id, string name, int level, int health, int maxHealth, int minDamage, int maxDamage, int sceneId)
         {
             this.id = id;
             this.name = name;
@@ -30,7 +30,6 @@ namespace Game_3
             this.minDamage = minDamage;
             this.maxDamage = maxDamage;
             inventory = new Inventory(id, this);
-            sceneController = new SceneController(id, this);
         }
 
         public void showStats()
@@ -39,7 +38,7 @@ namespace Game_3
             Console.WriteLine($"Player: {name}");
             Console.WriteLine($"Level: {level}");
             Console.WriteLine($"Health: {health}/{maxHealth}");
-            Console.WriteLine($"Damage: {minDamage}-{maxDamage}");
+            Console.WriteLine($"Damage: {minDamage} to {maxDamage}");
             Console.ReadKey();
             Console.Clear();
         }
@@ -71,7 +70,8 @@ namespace Game_3
         public void healPlayer(Player player)
         {
             player.ShowHp(player);
-            Console.WriteLine("Select an item to use:\n");
+            Console.WriteLine("Select an item to use\n\nType \"x\" to leave\n\nItems:");
+            
             player.inventory.ShowUsableItems(player);
             string? input = Console.ReadLine();
 
@@ -98,9 +98,14 @@ namespace Game_3
                     Console.WriteLine("Item not found. Please try again.");
                 }
             }
+            else if(input?.ToLower().Trim() == "x")
+            {
+                Console.Clear();
+            }
             else
             {
                 Console.WriteLine("Invalid input. Please enter a valid item ID.");
+                healPlayer(player);
             }
         }
 
@@ -121,9 +126,16 @@ namespace Game_3
                     Items? item = player.inventory.items?.FirstOrDefault(i => i.id == itemId);
                     if (item != null)
                     {
+                        if(player.equippedItem != null)
+                        {
+                            player.inventory.AddItem(player.equippedItem);
+                        }
+                        player.equippedItem = item;
                         player.minDamage = (int)item.minDamage;
                         player.maxDamage = (int)item.maxDamage;
+                        player.inventory.RemoveItem(player, itemId);
                         Console.WriteLine($"You equipped {item.name}\nPress any key to continue");
+                        player.equippedItem.name = item.name;
                         Console.ReadKey();
                         Console.Clear();
                         itemFound = true;

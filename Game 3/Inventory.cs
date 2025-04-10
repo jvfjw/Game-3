@@ -48,7 +48,29 @@ namespace Game_3
                     Console.WriteLine($"- ID: {item.id}, {item.name}: {item.description}");
                 }
             }
-            Console.WriteLine("\n\n");
+            if (player.equippedItem != null)
+                Console.WriteLine($"\nEquipped item: {player.equippedItem.name}: {player.equippedItem.description}");
+            else
+                Console.WriteLine("\nEqquiped item: No item equipped.");
+
+                Console.WriteLine("\n\n");
+            Console.WriteLine("1. Equip a weapon");
+            Console.WriteLine("2. Use an item");
+            Console.WriteLine("3. Exit");
+
+            string? input = Console.ReadLine();
+            
+            switch(input)
+            {
+                case "1":
+                    player.selectItem(player);
+                    break;
+                case "2":
+                    player.healPlayer(player);
+                    break;
+                case "3":
+                    break;
+            }
         }
 
         public void ShowWeapons(Player player)
@@ -59,7 +81,7 @@ namespace Game_3
 
             foreach(var weapon in player.inventory.items)
             {
-                if(weapon.minDamage == null && weapon.maxDamage == null)
+                if(weapon.minDamage == null || weapon.maxDamage == null)
                 {
                     continue;
                 }
@@ -69,6 +91,7 @@ namespace Game_3
                 }
 
             }
+            Console.WriteLine("\n\n");
         }
 
         public void ShowUsableItems(Player player)

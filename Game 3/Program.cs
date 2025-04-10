@@ -8,13 +8,14 @@ bool gameRunning = false;
 
 //setting the Player and SceneController objects
 
-Player player = new Player(1, "Default", 1, 100, 100, 5, 10);
-SceneController sceneController = new SceneController(1, player);
-player.inventory.AddItem(Items.scrapGun); //test can erase later
-player.inventory.AddItem(Items.scrapSword); //test
-player.inventory.AddItem(Items.bandage); // test
-player.inventory.AddItem(Items.unknown); //test
+Player player = new Player(1, "Default", 1, 100, 100, 5, 10, 1);
+SceneController sceneController = new SceneController(player);
 
+player.inventory.AddItem(Items.scrapGun);
+player.inventory.AddItem(Items.scrapSword);
+player.inventory.AddItem(Items.scrapSword);
+player.inventory.AddItem(Items.bandage);
+player.inventory.AddItem(Items.unknown);
 while (menuRunning)
 {
     Console.WriteLine("Welcome to the game!");
@@ -54,15 +55,15 @@ while (gameRunning)
             player.showStats();
             break;
         case "2":
-            player.inventory.ShowInventory();
+            player.inventory.ShowInventory(player);
             break;
         case "3":
             gameRunning = false;
             break;
         case "4":
             Console.WriteLine("Select an item to equip:\n");
-            player.inventory.ShowInventory();
-            player.inventory.selectItem(player);
+            player.inventory.ShowInventory(player);
+            player.selectItem(player);
             break;
         default:
             Console.WriteLine("Invalid option. Please try again.");
