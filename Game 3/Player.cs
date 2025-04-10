@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -45,20 +46,107 @@ namespace Game_3
 
         public void CreateName(Player player)
         {
-            Console.Clear();
             Console.WriteLine("Select a name for your character");
             string? input = Console.ReadLine().Trim();
-            if (input != null && input.Length > 0)
+            if(string.IsNullOrEmpty(input))
             {
-                player.name = input;
+                Console.Clear();
+                Console.WriteLine("Invalid name. Please try again.\n");
+                CreateName(player);
             }
             else
             {
-                Console.WriteLine("Invalid name. Please try again.");
-                Console.WriteLine("Press any key to try again...");
-                Console.ReadKey();
-                CreateName(player);
+                player.name = input;
+                Console.Clear();
+                Console.WriteLine($"Welcome {player.name}!");
             }
+        }
+
+        public void ShowHp(Player player)
+        {
+            Console.Clear();
+            Console.WriteLine($"{player.name} Health: {health}/{maxHealth}");
+            Console.Clear();
+        }
+        public void healPlayer(Player player)
+        {
+            player.ShowHp(player);
+            Console.WriteLine("Select an item to use:\n");
+            player.inventory.ShowUsableItems(player);
+            string? input = Console.ReadLine();
+
+            if (int.TryParse(input, out int itemId))
+            {
+                Items? item = player.inventory.items?.FirstOrDefault(i => i.id == itemId);
+                if (item != null)
+                {
+                    int sum;
+                    int calc = 0;
+                    player.health += (int)item.maxDamage;
+                    if (player.health > player.maxHealth)
+                    {
+                        sum = player.health - player.health;
+                        player.health = player.maxHealth; 
+                        calc = (int)item.maxDamage - sum;
+                    }
+                    Console.WriteLine($"You used {item.name} and healed {calc} health.\nPress any key to continue");
+                    Console.ReadKey();
+                    Console.Clear();
+                }
+                else
+                {
+                    Console.WriteLine("Item not found. Please try again.");
+                }
+            }
+            else
+            {
+                Console.WriteLine("Invalid input. Please enter a valid item ID.");
+            }
+        }
+
+        public void selectItem(Player player)
+        {
+            Console.Clear();
+
+            player.inventory.ShowWeapons(player);
+
+            Console.WriteLine("\nEnter the itemId to equip:");
+            bool itemFound = false;
+
+            while (!itemFound)
+            {
+                string? input = Console.ReadLine();
+                if (int.TryParse(input, out int itemId))
+                {
+                    Items? item = player.inventory.items?.FirstOrDefault(i => i.id == itemId);
+                    if (item != null)
+                    {
+                        player.minDamage = (int)item.minDamage;
+                        player.maxDamage = (int)item.maxDamage;
+                        Console.WriteLine($"You equipped {item.name}\nPress any key to continue");
+                        Console.ReadKey();
+                        Console.Clear();
+                        itemFound = true;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Item not found. Please try again.");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Invalid input. Please enter a valid item ID.");
+                }
+            }
+        }
+
+        public void ExportPlayer(Player player)
+        {
+            string playerName = player.name;
+            string fileName = playerName + ".txt";
+            string filePath = Path.GetFullPath(Path.Combine(Directory.GetCurrentDirectory(), @$"..\..\..\{playerName}.txt"));
+
+            string playerData = $"{player.name};{player.id}{player.inventory};";
         }
 
     }

@@ -26,7 +26,9 @@ while (menuRunning)
     {
         case "1":
             Console.Clear();
-            player.CreateName(player);
+            player.CreateName(player);            
+            menuRunning = false;
+            gameRunning = true;
             break;
         case "2":
             menuRunning = false;

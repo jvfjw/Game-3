@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,7 +10,7 @@ namespace Game_3
     class Inventory
     {
         public int id;
-        public Player? player;
+        
         public List<Items>? items;
 
         //Utilizing the constructor to initialize the inventory with an id and a player. So i can assign a inventory to a player.
@@ -17,7 +18,7 @@ namespace Game_3
         public Inventory(int id, Player? player)
         {
             this.id = id;
-            this.player = player;
+           
             items = new List<Items>();
         }
 
@@ -28,36 +29,32 @@ namespace Game_3
             items?.Add(item);
         }
 
-        public void RemoveItem(int id)
+        //Method to remove items from the inventory
+        public void RemoveItem(Player player, int id)
         {
-            if (items != null)
-            {
-                Items? itemToRemove = items.FirstOrDefault(item => item.id == id);
-                if (itemToRemove != null)
-                {
-                    items.Remove(itemToRemove);
-                }
-            }
-
+            player.inventory.items?.RemoveAll(i => i.id == id);
         }
 
-        public void ShowInventory()
+        public void ShowInventory(Player player)
         {
             Console.Clear();
+            
             Console.WriteLine("Inventory: ");
-            if (items != null && items.Count > 0)
+            
+            if (player.inventory.items != null && player.inventory.items.Count > 0)
             {
-                foreach (var item in items)
+                foreach (var item in player.inventory.items)
                 {
-                    Console.WriteLine($"- ID: {item.id}, {item.name} {item.description}");
+                    Console.WriteLine($"- ID: {item.id}, {item.name}: {item.description}");
                 }
             }
-
+            Console.WriteLine("\n\n");
         }
 
-        public void ShowWeapons()
+        public void ShowWeapons(Player player)
         {
             Console.Clear();
+
             Console.WriteLine("Weapons:\n");
 
             foreach(var weapon in player.inventory.items)
@@ -73,38 +70,21 @@ namespace Game_3
 
             }
         }
-        //Verify if the player has the item in the inventory and if so, set the minDamage and maxDamage to the values of the selected item.
-        public void selectItem(Player player)
+
+        public void ShowUsableItems(Player player)
         {
-            Console.Clear();
-            player.inventory.ShowWeapons();
-            Console.WriteLine("\nEnter the itemId to equip:");
-            bool itemFound = false;
-            while (!itemFound)
+            if (player.inventory.items != null && player.inventory.items.Count > 0)
             {
-                string? input = Console.ReadLine();
-                if (int.TryParse(input, out int itemId))
+                foreach (var item in player.inventory.items)
                 {
-                    Items? item = player.inventory.items?.FirstOrDefault(i => i.id == itemId);
-                    if (item != null)
-                    {
-                        player.minDamage = (int)item.minDamage;
-                        player.maxDamage = (int)item.maxDamage;
-                        Console.WriteLine($"You equipped {item.name}\nPress any key to continue");
-                        Console.ReadKey();
-                        Console.Clear();
-                        itemFound = true;
-                    }
+                    if (item.usable == true)
+                        Console.WriteLine($"- ID: {item.id}, {item.name}: {item.description}");
                     else
-                    {
-                        Console.WriteLine("Item not found. Please try again.");
-                    }
+                        continue;
                 }
-                else
-                {
-                    Console.WriteLine("Invalid input. Please enter a valid item ID.");
-                }
+                
             }
         }
+
     }
 }
